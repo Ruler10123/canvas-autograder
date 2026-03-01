@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Real grades CSV (timestamped Canvas exports)
+input/2*.csv
+
+# Real submissions (keep example files below)
+input/submissions/*
+!input/submissions/smithjane_100001_text.html
+!input/submissions/jonesbob_100002_text.html
+!input/submissions/davischris_LATE_100003_text.html
+
+# Output (generated files)
+output/
