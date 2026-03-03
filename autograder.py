@@ -182,16 +182,27 @@ def main() -> None:
         except (ValueError, TypeError):
             continue
 
+    # Helper to check if value is excused (preserve EX)
+    def is_excused(row: list[str], col: int) -> bool:
+        if col >= len(row):
+            return False
+        return str(row[col]).strip().upper() == "EX"
+
     for sid, (filepath, is_late) in submissions.items():
         if sid not in id_to_row:
             print(f"  Skipping {sid}: no matching row in CSV")
+            continue
+
+        row_idx = id_to_row[sid]
+        if is_excused(rows[row_idx], col_index):
+            print(f"  Skipping {sid}: excused (EX)")
+            graded_ids.add(sid)  # Don't treat as non-submitter
             continue
 
         word_count = count_words(filepath)
         score = SCORE_PASS if word_count >= WORD_COUNT_THRESHOLD else SCORE_FAIL
         if is_late:
             score = max(0, score - LATE_PENALTY)
-        row_idx = id_to_row[sid]
 
         # Ensure row has enough columns
         while len(rows[row_idx]) <= col_index:
@@ -201,9 +212,12 @@ def main() -> None:
         late_note = " [LATE -25]" if is_late else ""
         print(f"  Graded {sid}: {score} ({word_count} words){late_note}")
 
-    # Set 0 for non-submitters
+    # Set 0 for non-submitters (skip if excused)
     for sid, row_idx in id_to_row.items():
         if sid not in graded_ids:
+            if is_excused(rows[row_idx], col_index):
+                print(f"  Skipping {sid}: excused (EX)")
+                continue
             while len(rows[row_idx]) <= col_index:
                 rows[row_idx].append("")
             rows[row_idx][col_index] = "0"

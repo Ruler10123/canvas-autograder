@@ -6,7 +6,7 @@ A simple tool that automatically grades Canvas assignment submissions based on w
 
 ## What This Does
 
-The autograder checks each student's submission (PDF, HTML, or Word document) and counts the words. If the submission has **200 or more words**, the student gets full credit (100). If it has **fewer than 200 words**, they get partial credit (50). Late submissions (filenames with `LATE` between the first and second underscore) receive a 25-point penalty. Students who did not submit get a 0. You can change these numbers if you want different rules (see [Changing the Grading Rules](#changing-the-grading-rules) below).
+The autograder checks each student's submission (PDF, HTML, or Word document) and counts the words. If the submission has **200 or more words**, the student gets full credit (100). If it has **fewer than 200 words**, they get partial credit (50). Late submissions (filenames with `LATE` between the first and second underscore) receive a 25-point penalty. Students who did not submit get a 0. Students with **EX** (excused) in the grade column are skipped and their grade is left unchanged. You can change these numbers if you want different rules (see [Changing the Grading Rules](#changing-the-grading-rules) below).
 
 ---
 
